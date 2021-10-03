@@ -763,10 +763,11 @@ open class SCLAlertView: UIViewController {
         view.alpha = 0
         view.tag = uniqueTag
         view.accessibilityIdentifier = uniqueAccessibilityIdentifier
-        let rv = UIApplication.shared.keyWindow! as UIWindow
-        rv.addSubview(view)
-        view.frame = rv.bounds
-        baseView.frame = rv.bounds
+        if let rv = UIApplication.shared.keyWindow{
+            rv.addSubview(view)
+            view.frame = rv.bounds
+            baseView.frame = rv.bounds
+        }
         
         // Alert colour/icon
         var iconImage: UIImage?
