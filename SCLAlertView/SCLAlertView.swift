@@ -399,7 +399,7 @@ open class SCLAlertView: UIViewController {
             return
         }
 	    
-        let rv = UIApplication.shared.keyWindow! as UIWindow
+        guard let rv = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else {return}//UIApplication.shared.keyWindow! as UIWindow
         let sz = rv.frame.size
         
         // Set background frame
@@ -763,7 +763,7 @@ open class SCLAlertView: UIViewController {
         view.alpha = 0
         view.tag = uniqueTag
         view.accessibilityIdentifier = uniqueAccessibilityIdentifier
-        if let rv = UIApplication.shared.keyWindow{
+        if let rv = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
             rv.addSubview(view)
             view.frame = rv.bounds
             baseView.frame = rv.bounds
@@ -911,7 +911,7 @@ open class SCLAlertView: UIViewController {
     // Show animation in the alert view
     fileprivate func showAnimation(_ animationStyle: SCLAnimationStyle = .topToBottom, animationStartOffset: CGFloat = -400.0, boundingAnimationOffset: CGFloat = 15.0, animationDuration: TimeInterval = 0.2) {
         
-        let rv = UIApplication.shared.keyWindow! as UIWindow
+        guard let rv = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else {return}//UIApplication.shared.keyWindow! as UIWindow
         var animationStartOrigin = self.baseView.frame.origin
         var animationCenter : CGPoint = rv.center
         
@@ -1040,7 +1040,7 @@ open class SCLAlertView: UIViewController {
     
     //Return true if a SCLAlertView is already being shown, false otherwise
     open func isShowing() -> Bool {
-        if let subviews = UIApplication.shared.keyWindow?.subviews {
+        if let subviews = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.subviews {
             for view in subviews {
                 if view.tag == uniqueTag && view.accessibilityIdentifier == uniqueAccessibilityIdentifier {
                     return true
